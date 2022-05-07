@@ -41,6 +41,7 @@ let collectionList = [];
 async function main(){
   await db.connectDB();
   collectionList = await getCollectionFromDB();
+  console.log(collectionList)
   setInterval(async function() {
     try{
       await fetchData();
@@ -68,11 +69,14 @@ async function fetchData(){
 
     // flter data
     rpcLogList = rpcLogList.reduce((unique, o) => {
-      if(!unique.some(obj => obj.data === o.data) && collectionList.includes(o.address)) {
+      // console.log(ethers.utils.getAddress(o.address))
+      if(!unique.some(obj => obj.data === o.data) && collectionList.includes(ethers.utils.getAddress(o.address))) {
         unique.push(o);
       }
       return unique;
     },[]);
+
+    console.log(rpcLogList)
 
     // loop send data
     for (let i = 0; i < rpcLogList.length; i++) {
