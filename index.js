@@ -4,17 +4,36 @@ const Collection = require("./models/Collections");
 const ethers = require('ethers');
 
 const chainInfoList = {
-  avax: {
-    id: 43113,
-    url: 'https://api.avax-test.network/ext/bc/C/rpc',
+  ropsten: {
+    url: "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+    id: 3,
     lastestBlock: 0,
     reverseBlock: 6
   },
-  // eth: {
-  //   id: 4,
-  //   url: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
-  //   lastestBlock: 0,
-  // },
+  polygontestnet: {
+    url: "https://matic.getblock.io/testnet/?api_key=a73d4ec1-75e4-43aa-bfa9-70641f03506a",
+    id: 80001,
+    lastestBlock: 0,
+    reverseBlock: 6
+  },
+  avaxtestnet: {
+    url: "https://api.avax-test.network/ext/bc/C/rpc",
+    id: 43113,
+    lastestBlock: 0,
+    reverseBlock: 6
+  },
+  fantomtestnet: {
+    url: "https://rpc.testnet.fantom.network/",
+    id: 4002,
+    lastestBlock: 0,
+    reverseBlock: 6
+  },
+  moonbeamtestnet: {
+    url: "https://rpc.testnet.moonbeam.network/",
+    id: 1287,
+    lastestBlock: 0,
+    reverseBlock: 6
+  },
 }
 
 let collectionList = [];
@@ -28,7 +47,7 @@ async function main(){
     }catch(e){
       console.error(e);
     }
-  }, 15000);
+  }, 5000);
 }
 
 main().catch()
