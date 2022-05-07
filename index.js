@@ -51,7 +51,7 @@ async function main(){
   }, 3000);
 }
 
-main().catch()
+main().catch();
 
 async function getCollectionFromDB(){
   let collectionList = await Collection.find();
@@ -70,7 +70,7 @@ async function fetchData(){
     // flter data
     rpcLogList = rpcLogList.reduce((unique, o) => {
       // console.log(ethers.utils.getAddress(o.address))
-      if(!unique.some(obj => obj.data === o.data) && collectionList.includes(ethers.utils.getAddress(o.address))) {
+      if(!unique.some(obj => obj.topics[3] === o.topics[3]) && collectionList.includes(ethers.utils.getAddress(o.address))) {
         unique.push(o);
       }
       return unique;
@@ -133,7 +133,7 @@ async function mapRPCLogToRequestMetaData(data,chainId){
   let result = {
     address: ethers.utils.getAddress(data.address),
     chainId: chainId,
-    id: data.topics.length >= 3 ? parseInt(data.topics[3], 16).toString() : parseInt(data.data, 16).toString(),
+    id: parseInt(data.topics[3], 16).toString(),
     body: {
       "owner": owner
     }
