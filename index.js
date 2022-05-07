@@ -8,31 +8,31 @@ const chainInfoList = {
     url: "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
     id: 3,
     lastestBlock: 0,
-    reverseBlock: 6
+    reverseBlock: 4
   },
   polygontestnet: {
     url: "https://matic.getblock.io/testnet/?api_key=a73d4ec1-75e4-43aa-bfa9-70641f03506a",
     id: 80001,
     lastestBlock: 0,
-    reverseBlock: 6
+    reverseBlock: 4
   },
   avaxtestnet: {
     url: "https://api.avax-test.network/ext/bc/C/rpc",
     id: 43113,
     lastestBlock: 0,
-    reverseBlock: 6
+    reverseBlock: 4
   },
   fantomtestnet: {
     url: "https://rpc.testnet.fantom.network/",
     id: 4002,
     lastestBlock: 0,
-    reverseBlock: 6
+    reverseBlock: 4
   },
   moonbeamtestnet: {
     url: "https://rpc.testnet.moonbeam.network/",
     id: 1287,
     lastestBlock: 0,
-    reverseBlock: 6
+    reverseBlock: 4
   },
 }
 
@@ -47,7 +47,7 @@ async function main(){
     }catch(e){
       console.error(e);
     }
-  }, 5000);
+  }, 3000);
 }
 
 main().catch()
@@ -78,7 +78,7 @@ async function fetchData(){
     for (let i = 0; i < rpcLogList.length; i++) {
       const log = await mapRPCLogToRequestMetaData(rpcLogList[i],chain.id);
       if(!isNaN(log.id)){
-        await sendLogToAxelarseaMetadata(log);
+        sendLogToAxelarseaMetadata(log).catch(err => console.error(err));
       }
     }
   }
