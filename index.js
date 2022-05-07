@@ -152,3 +152,16 @@ async function sendLogToAxelarseaMetadata(req){
   console.log('sendLogToAxelarseaMetadata: '+  `/nft/collections/${req.address}/${req.chainId}/items/${req.id}/refreshMetadata`+ " | owner: "+ JSON.stringify(req.body.owner));
   await callPost(url, req.body)
 }
+
+// Dummy express for deploying to DO app
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
