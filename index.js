@@ -49,12 +49,11 @@ async function fetchData(){
 
     // flter data
     rpcLogList = rpcLogList.reduce((unique, o) => {
-      if(!unique.some(obj => obj.address === o.address && obj.data === o.data && obj.topics[2] === o.topics[2]) && collectionList.includes(o.address)) {
+      if(!unique.some(obj => obj.address === o.address && obj.data === o.data && obj.topics[2] === o.topics[2]) && collectionList.includes(ethers.utils.getAddress(o.address))) {
         unique.push(o);
       }
       return unique;
     },[]);
-
     // loop send data
     for (let i = 0; i < rpcLogList.length; i++) {
       const log = await mapRPCLogToRequestMetaData(rpcLogList[i],chain.id);
@@ -99,7 +98,6 @@ async function getRPCLogs(chainInfo){
     };
 
     const data = await callPost(chainInfo.url,req);
-
     // set new lastest block
     chainInfo.lastestBlock = newLastestBlock;
     return data.result;
@@ -111,9 +109,9 @@ async function getRPCLogs(chainInfo){
 async function mapRPCLogToRequestMetaData(data,chainId){
   const owner = ethers.utils.getAddress('0x'+(data.topics[2].substring((data.topics[2].length-40))));
   let result = {
-    address: data.address,
+    address: ethers.utils.getAddress(data.address),
     chainId: chainId,
-    id: parseInt(data.data, 16).toString(),
+    id: data.topics.length >= 3 ? parseInt(data.topics[3], 16).toString() : parseInt(data.data, 16).toString(),
     body: {
       "owner": owner
     }
