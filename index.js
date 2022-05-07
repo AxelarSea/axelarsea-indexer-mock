@@ -68,7 +68,7 @@ async function fetchData(){
 
     // flter data
     rpcLogList = rpcLogList.reduce((unique, o) => {
-      if(!unique.some(obj => obj.address === o.address && obj.data === o.data && obj.topics[2] === o.topics[2]) && collectionList.includes(o.address)) {
+      if(!unique.some(obj => obj.data === o.data) && collectionList.includes(o.address)) {
         unique.push(o);
       }
       return unique;
@@ -121,6 +121,7 @@ async function getRPCLogs(chainInfo){
 
     // set new lastest block
     chainInfo.lastestBlock = newLastestBlock;
+    data.result = data.result.reverse();
     return data.result;
   }else{
     return [];
