@@ -4,17 +4,36 @@ const Collection = require("./models/Collections");
 const ethers = require('ethers');
 
 const chainInfoList = {
-  avax: {
-    id: 43113,
-    url: 'https://api.avax-test.network/ext/bc/C/rpc',
+  ropsten: {
+    url: "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+    id: 3,
     lastestBlock: 0,
-    reverseBlock: 6
+    reverseBlock: 4
   },
-  // eth: {
-  //   id: 4,
-  //   url: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
-  //   lastestBlock: 0,
-  // },
+  polygontestnet: {
+    url: "https://matic.getblock.io/testnet/?api_key=a73d4ec1-75e4-43aa-bfa9-70641f03506a",
+    id: 80001,
+    lastestBlock: 0,
+    reverseBlock: 4
+  },
+  avaxtestnet: {
+    url: "https://api.avax-test.network/ext/bc/C/rpc",
+    id: 43113,
+    lastestBlock: 0,
+    reverseBlock: 4
+  },
+  fantomtestnet: {
+    url: "https://rpc.testnet.fantom.network/",
+    id: 4002,
+    lastestBlock: 0,
+    reverseBlock: 4
+  },
+  moonbeamtestnet: {
+    url: "https://rpc.testnet.moonbeam.network/",
+    id: 1287,
+    lastestBlock: 0,
+    reverseBlock: 4
+  },
 }
 
 let collectionList = [];
@@ -22,13 +41,14 @@ let collectionList = [];
 async function main(){
   await db.connectDB();
   collectionList = await getCollectionFromDB();
+  console.log(collectionList)
   setInterval(async function() {
     try{
       await fetchData();
     }catch(e){
       console.error(e);
     }
-  }, 15000);
+  }, 3000);
 }
 
 main().catch()
@@ -49,7 +69,8 @@ async function fetchData(){
 
     // flter data
     rpcLogList = rpcLogList.reduce((unique, o) => {
-      if(!unique.some(obj => obj.address === o.address && obj.data === o.data && obj.topics[2] === o.topics[2]) && collectionList.includes(ethers.utils.getAddress(o.address))) {
+      // console.log(ethers.utils.getAddress(o.address))
+      if(!unique.some(obj => obj.data === o.data) && collectionList.includes(ethers.utils.getAddress(o.address))) {
         unique.push(o);
       }
       return unique;
@@ -58,7 +79,7 @@ async function fetchData(){
     for (let i = 0; i < rpcLogList.length; i++) {
       const log = await mapRPCLogToRequestMetaData(rpcLogList[i],chain.id);
       if(!isNaN(log.id)){
-        await sendLogToAxelarseaMetadata(log);
+        sendLogToAxelarseaMetadata(log).catch(err => console.error(err));
       }
     }
   }
@@ -81,7 +102,7 @@ async function getRPCLogs(chainInfo){
   if (newLastestBlock !== chainInfo.lastestBlock){
     const fromBlock = '0x'+(parseInt(chainInfo.lastestBlock === 0 ? newLastestBlock : chainInfo.lastestBlock, 16) - chainInfo.reverseBlock).toString(16)
     const topic = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
-    console.log('block: '+fromBlock+' to '+ newLastestBlock);
+    console.log('block: '+fromBlock+' to '+ newLastestBlock, 'chain', chainInfo.id);
     const req = {
         "jsonrpc": "2.0",
         "method": "eth_getLogs",
@@ -100,6 +121,7 @@ async function getRPCLogs(chainInfo){
     const data = await callPost(chainInfo.url,req);
     // set new lastest block
     chainInfo.lastestBlock = newLastestBlock;
+    data.result = data.result.reverse();
     return data.result;
   }else{
     return [];
