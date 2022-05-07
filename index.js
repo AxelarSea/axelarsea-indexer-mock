@@ -101,7 +101,7 @@ async function getRPCLogs(chainInfo){
   if (newLastestBlock !== chainInfo.lastestBlock){
     const fromBlock = '0x'+(parseInt(chainInfo.lastestBlock === 0 ? newLastestBlock : chainInfo.lastestBlock, 16) - chainInfo.reverseBlock).toString(16)
     const topic = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
-    console.log('block: '+fromBlock+' to '+ newLastestBlock);
+    console.log('block: '+fromBlock+' to '+ newLastestBlock, 'chain', chainInfo.id);
     const req = {
         "jsonrpc": "2.0",
         "method": "eth_getLogs",
