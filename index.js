@@ -76,10 +76,16 @@ async function fetchData(){
       return unique;
     },[]);
     // loop send data
+    let promises = [];
     for (let i = 0; i < rpcLogList.length; i++) {
       const log = await mapRPCLogToRequestMetaData(rpcLogList[i],chain.id);
       if(!isNaN(log.id)){
-        sendLogToAxelarseaMetadata(log).catch(err => console.error(err));
+        promises.push(sendLogToAxelarseaMetadata(log).catch(err => console.error(err)));
+        if (promises.length >= 10) {
+          try {
+            await Promise.all(promises);
+          } catch (err) {}
+        }
       }
     }
   }
