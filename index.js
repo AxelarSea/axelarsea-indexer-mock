@@ -84,6 +84,7 @@ async function fetchData(){
         if (promises.length >= 10) {
           try {
             await Promise.all(promises);
+            promises = [];
           } catch (err) {}
         }
       }
