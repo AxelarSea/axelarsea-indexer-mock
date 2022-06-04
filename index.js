@@ -43,7 +43,7 @@ async function main(){
   collectionList = await getCollectionFromDB();
   console.log(collectionList)
 
-  // Temporary close indexer
+  // Temporary close indexer 
 
   // setInterval(async function() {
   //   try{
