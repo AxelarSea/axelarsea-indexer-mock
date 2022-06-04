@@ -42,13 +42,13 @@ async function main(){
   await db.connectDB();
   collectionList = await getCollectionFromDB();
   console.log(collectionList)
-  setInterval(async function() {
-    try{
-      await fetchData();
-    }catch(e){
-      console.error(e);
-    }
-  }, 3000);
+  // setInterval(async function() {
+  //   try{
+  //     await fetchData();
+  //   }catch(e){
+  //     console.error(e);
+  //   }
+  // }, 3000);
 }
 
 main().catch();
