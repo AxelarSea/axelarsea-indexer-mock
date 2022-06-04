@@ -42,6 +42,9 @@ async function main(){
   await db.connectDB();
   collectionList = await getCollectionFromDB();
   console.log(collectionList)
+
+  // Temporary close indexer
+
   // setInterval(async function() {
   //   try{
   //     await fetchData();
