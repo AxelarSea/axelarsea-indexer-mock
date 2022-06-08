@@ -11,7 +11,7 @@ const chainInfoList = {
     reverseBlock: 4
   },
   polygontestnet: {
-    url: "https://matic.getblock.io/testnet/?api_key=a73d4ec1-75e4-43aa-bfa9-70641f03506a",
+    url: "https://polygon-rpc.com",
     id: 80001,
     lastestBlock: 0,
     reverseBlock: 4
