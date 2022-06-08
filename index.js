@@ -11,7 +11,7 @@ const chainInfoList = {
     reverseBlock: 4
   },
   polygontestnet: {
-    url: "https://polygon-rpc.com",
+    url: "https://matic-mumbai.chainstacklabs.com",
     id: 80001,
     lastestBlock: 0,
     reverseBlock: 4
