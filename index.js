@@ -4,12 +4,12 @@ const Collection = require("./models/Collections");
 const ethers = require('ethers');
 
 const chainInfoList = {
-  ropsten: {
-    url: "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-    id: 3,
-    lastestBlock: 0,
-    reverseBlock: 4
-  },
+//   ropsten: {
+//     url: "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+//     id: 3,
+//     lastestBlock: 0,
+//     reverseBlock: 4
+//   },
   polygontestnet: {
     url: "https://rpc-mumbai.maticvigil.com",
     id: 80001,
