@@ -14,25 +14,25 @@ const chainInfoList = {
     url: "https://rpc-mumbai.maticvigil.com",
     id: 80001,
     lastestBlock: 0,
-    reverseBlock: 4
+    reverseBlock: 40
   },
   avaxtestnet: {
     url: "https://api.avax-test.network/ext/bc/C/rpc",
     id: 43113,
     lastestBlock: 0,
-    reverseBlock: 4
+    reverseBlock: 40
   },
   fantomtestnet: {
     url: "https://rpc.testnet.fantom.network/",
     id: 4002,
     lastestBlock: 0,
-    reverseBlock: 4
+    reverseBlock: 40
   },
   moonbeamtestnet: {
     url: "https://rpc.testnet.moonbeam.network/",
     id: 1287,
     lastestBlock: 0,
-    reverseBlock: 4
+    reverseBlock: 40
   },
 }
 
@@ -49,7 +49,7 @@ async function main(){
     }catch(e){
       console.error(e);
     }
-  }, 3000);
+  }, 10000);
 }
 
 main().catch();
