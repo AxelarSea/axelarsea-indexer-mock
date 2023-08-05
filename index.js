@@ -164,7 +164,7 @@ async function sendLogToAxelarseaMetadata(req){
 // Dummy express for deploying to DO app
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3831
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
